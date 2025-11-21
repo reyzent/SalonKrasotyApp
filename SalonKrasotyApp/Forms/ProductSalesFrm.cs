@@ -62,13 +62,19 @@ namespace SalonKrasotyApp
 
         private void DeleteBtn_Click(object sender, EventArgs e)
         {
+            // Получаем текущую продажу
             ProductSale prdSale = (ProductSale)productSaleBindingSource.Current;
-            DialogResult dr = MessageBox.Show("Удалить данные о продаже - " + prdSale.Product.Title,
+            if (prdSale == null) return;
+
+            DialogResult dr = MessageBox.Show($"Удалить данные о продаже - {prdSale.Product.Title}?",
                     "Удаление данных о продаже товара", MessageBoxButtons.YesNo);
             if (dr == DialogResult.Yes)
             {
                 Program.db.ProductSale.Remove(prdSale);
                 Program.db.SaveChanges();
+                // Обновляем данные после удаления
+                productSaleBindingSource.DataSource = Program.db.ProductSale
+                    .Where(p => p.ProductID == prod.ID).ToList();
             }
         }
 

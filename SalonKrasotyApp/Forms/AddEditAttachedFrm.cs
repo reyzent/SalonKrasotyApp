@@ -32,7 +32,7 @@ namespace SalonKrasotyApp
                 return;
             }
             if (prod.Product1.Contains(newprod) == true)
-            { 
+            {
                 MessageBox.Show("Товар " + newprod.Title + " уже рекомендован!");
                 return;
             }
@@ -52,9 +52,9 @@ namespace SalonKrasotyApp
         }
 
         private void DeleteBtn_Click(object sender, EventArgs e)
-        {   
+        {
             Product oldprod = (Product)productBindingSource1.Current;
-            
+
             prod.Product1.Remove(oldprod);
             try
             {

@@ -138,7 +138,7 @@
             this.costTextBox.Location = new System.Drawing.Point(138, 238);
             this.costTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.costTextBox.Name = "costTextBox";
-            this.costTextBox.Size = new System.Drawing.Size(140, 23);
+            this.costTextBox.Size = new System.Drawing.Size(202, 23);
             this.costTextBox.TabIndex = 2;
             // 
             // productBindingSource
@@ -162,7 +162,7 @@
             this.iDTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.iDTextBox.Name = "iDTextBox";
             this.iDTextBox.ReadOnly = true;
-            this.iDTextBox.Size = new System.Drawing.Size(140, 23);
+            this.iDTextBox.Size = new System.Drawing.Size(202, 23);
             this.iDTextBox.TabIndex = 6;
             // 
             // isActiveCheckBox
@@ -173,7 +173,7 @@
             this.isActiveCheckBox.Name = "isActiveCheckBox";
             this.isActiveCheckBox.Size = new System.Drawing.Size(141, 30);
             this.isActiveCheckBox.TabIndex = 8;
-            this.isActiveCheckBox.Text = "товар к продаже";
+            this.isActiveCheckBox.Text = "Товар к продаже";
             this.isActiveCheckBox.UseVisualStyleBackColor = true;
             // 
             // mainImagePathTextBox
@@ -194,7 +194,7 @@
             this.manufacturerIDComboBox.Location = new System.Drawing.Point(138, 206);
             this.manufacturerIDComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.manufacturerIDComboBox.Name = "manufacturerIDComboBox";
-            this.manufacturerIDComboBox.Size = new System.Drawing.Size(140, 24);
+            this.manufacturerIDComboBox.Size = new System.Drawing.Size(202, 24);
             this.manufacturerIDComboBox.TabIndex = 12;
             this.manufacturerIDComboBox.ValueMember = "ID";
             // 
@@ -208,7 +208,7 @@
             this.titleTextBox.Location = new System.Drawing.Point(138, 70);
             this.titleTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.titleTextBox.Name = "titleTextBox";
-            this.titleTextBox.Size = new System.Drawing.Size(140, 23);
+            this.titleTextBox.Size = new System.Drawing.Size(202, 23);
             this.titleTextBox.TabIndex = 14;
             // 
             // TitleLbl
@@ -222,7 +222,7 @@
             // 
             // SaveBtn
             // 
-            this.SaveBtn.Location = new System.Drawing.Point(12, 315);
+            this.SaveBtn.Location = new System.Drawing.Point(172, 315);
             this.SaveBtn.Name = "SaveBtn";
             this.SaveBtn.Size = new System.Drawing.Size(88, 23);
             this.SaveBtn.TabIndex = 16;
@@ -232,7 +232,7 @@
             // 
             // ExitBtn
             // 
-            this.ExitBtn.Location = new System.Drawing.Point(252, 315);
+            this.ExitBtn.Location = new System.Drawing.Point(290, 315);
             this.ExitBtn.Name = "ExitBtn";
             this.ExitBtn.Size = new System.Drawing.Size(88, 23);
             this.ExitBtn.TabIndex = 17;
@@ -264,7 +264,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(541, 353);
+            this.ClientSize = new System.Drawing.Size(538, 350);
             this.Controls.Add(this.SelectPictBtn);
             this.Controls.Add(this.ProductPic);
             this.Controls.Add(this.ExitBtn);

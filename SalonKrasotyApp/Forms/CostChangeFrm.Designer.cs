@@ -37,15 +37,16 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 40);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label1.Location = new System.Drawing.Point(12, 13);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(205, 13);
+            this.label1.Size = new System.Drawing.Size(260, 17);
             this.label1.TabIndex = 0;
             this.label1.Text = "На сколько надо изменить стоимость:";
             // 
             // AddCostTxt
             // 
-            this.AddCostTxt.Location = new System.Drawing.Point(223, 37);
+            this.AddCostTxt.Location = new System.Drawing.Point(278, 12);
             this.AddCostTxt.Name = "AddCostTxt";
             this.AddCostTxt.Size = new System.Drawing.Size(141, 20);
             this.AddCostTxt.TabIndex = 1;
@@ -53,7 +54,7 @@
             // 
             // EditCostBtn
             // 
-            this.EditCostBtn.Location = new System.Drawing.Point(50, 95);
+            this.EditCostBtn.Location = new System.Drawing.Point(102, 43);
             this.EditCostBtn.Name = "EditCostBtn";
             this.EditCostBtn.Size = new System.Drawing.Size(97, 23);
             this.EditCostBtn.TabIndex = 2;
@@ -63,7 +64,7 @@
             // 
             // ExitBtn
             // 
-            this.ExitBtn.Location = new System.Drawing.Point(223, 95);
+            this.ExitBtn.Location = new System.Drawing.Point(227, 43);
             this.ExitBtn.Name = "ExitBtn";
             this.ExitBtn.Size = new System.Drawing.Size(97, 23);
             this.ExitBtn.TabIndex = 3;
@@ -75,13 +76,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(394, 140);
+            this.ClientSize = new System.Drawing.Size(429, 78);
             this.Controls.Add(this.ExitBtn);
             this.Controls.Add(this.EditCostBtn);
             this.Controls.Add(this.AddCostTxt);
             this.Controls.Add(this.label1);
             this.Name = "CostChangeFrm";
-            this.Text = "Изменение мин. стоимости товаров";
+            this.Text = "Изменение стоимости товаров";
             this.Load += new System.EventHandler(this.CostChangeFrm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
