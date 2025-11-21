@@ -19,7 +19,7 @@ namespace SalonKrasotyApp
                 Product prd = Program.db.Product.Find(id);
                 sred += prd.Cost;
             }
-            sred = sred / MainFrm.lstSelectedIdData.Count;
+            sred /= MainFrm.lstSelectedIdData.Count;
             AddCostTxt.Text = $"{sred: ####.##}";
         }
 

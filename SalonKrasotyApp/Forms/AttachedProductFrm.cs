@@ -21,7 +21,7 @@ namespace SalonKrasotyApp
             productBindingSource.DataSource = prod.Product1.OrderBy(p => p.Title).ToList();
         }
 
-        DialogResult dr = DialogResult.Cancel;
+        private DialogResult dr = DialogResult.Cancel;
 
         private void EditBtn_Click(object sender, EventArgs e)
         {

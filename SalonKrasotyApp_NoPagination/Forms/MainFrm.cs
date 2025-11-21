@@ -52,7 +52,7 @@ namespace SalonKrasotyApp
             manufacturerBindingSource.DataSource = Program.db.Manufacturer.ToList();
 
             // Принудительная настройка ComboBox столбца
-            var comboColumn = productDataGridView.Columns["dataGridViewTextBoxColumn6"] as DataGridViewComboBoxColumn;
+            DataGridViewComboBoxColumn comboColumn = productDataGridView.Columns["dataGridViewTextBoxColumn6"] as DataGridViewComboBoxColumn;
             if (comboColumn != null)
             {
                 comboColumn.DataSource = manufacturerBindingSource;
@@ -214,7 +214,7 @@ namespace SalonKrasotyApp
         // ОБРАБОТЧИКИ ДЕЙСТВИЙ С ТОВАРАМИ
         private void AddProductBtn_Click(object sender, EventArgs e)
         {
-            using (var frm = new AddEditProductFrm { prod = null })
+            using (AddEditProductFrm frm = new AddEditProductFrm { prod = null })
             {
                 if (frm.ShowDialog() == DialogResult.OK)
                 {
@@ -227,7 +227,7 @@ namespace SalonKrasotyApp
         {
             if (productBindingSource.Current is Product prod)
             {
-                using (var frm = new AddEditProductFrm { prod = prod })
+                using (AddEditProductFrm frm = new AddEditProductFrm { prod = prod })
                 {
                     if (frm.ShowDialog() == DialogResult.OK)
                     {
@@ -241,7 +241,7 @@ namespace SalonKrasotyApp
         {
             if (productBindingSource.Current is Product prd)
             {
-                var result = MessageBox.Show($"Вы действительно хотите удалить товар - {prd.Title}?",
+                DialogResult result = MessageBox.Show($"Вы действительно хотите удалить товар - {prd.Title}?",
                     "Удаление товара", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
@@ -282,7 +282,7 @@ namespace SalonKrasotyApp
                     }
                 }
 
-                using (var form = new CostChangeFrm())
+                using (CostChangeFrm form = new CostChangeFrm())
                 {
                     if (form.ShowDialog() == DialogResult.OK)
                     {
@@ -296,7 +296,7 @@ namespace SalonKrasotyApp
         {
             if (productBindingSource.Current is Product prod)
             {
-                using (var form = new AttachedProductFrm { prod = prod })
+                using (AttachedProductFrm form = new AttachedProductFrm { prod = prod })
                 {
                     if (form.ShowDialog() == DialogResult.OK)
                     {
@@ -310,7 +310,7 @@ namespace SalonKrasotyApp
         {
             if (productBindingSource.Current is Product prod)
             {
-                using (var form = new ProductSalesFrm { prod = prod })
+                using (ProductSalesFrm form = new ProductSalesFrm { prod = prod })
                 {
                     form.ShowDialog();
                 }

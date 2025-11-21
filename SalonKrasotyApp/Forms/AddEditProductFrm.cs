@@ -9,7 +9,7 @@ namespace SalonKrasotyApp
 {
     public partial class AddEditProductFrm : Form
     {
-        string filePath = "";
+        private string filePath = "";
         public Product prod { get; set; } = null;
 
         public AddEditProductFrm()

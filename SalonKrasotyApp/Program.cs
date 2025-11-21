@@ -1,22 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using SalonKrasotyApp.ModelEF;
+using System;
 using System.Windows.Forms;
-using SalonKrasotyApp.ModelEF;
 
 namespace SalonKrasotyApp
 {
-    static class Program
+    internal static class Program
     {
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
         public static BeautySalonDB db = new BeautySalonDB();
         [STAThread]
-        static void Main()
+        private static void Main()
         {
-            if(db.Database.Exists() == false)
+            if (db.Database.Exists() == false)
             {
                 MessageBox.Show("Требуемая база данных не найдена!");
                 return;

@@ -9,7 +9,7 @@ namespace SalonKrasotyApp
 {
     public partial class AddEditProductFrm : Form
     {
-        string filePath = "";
+        private string filePath = "";
 
         public Product prod { get; set; } = null;
 
@@ -23,7 +23,7 @@ namespace SalonKrasotyApp
             manufacturerBindingSource.DataSource = Program.db.Manufacturer.ToList();
             manufacturerIDComboBox.SelectedIndex = 0;
 
-            if(prod == null)
+            if (prod == null)
             {
                 Product prod1 = new Product();
                 productBindingSource.Add(prod1);
@@ -48,13 +48,13 @@ namespace SalonKrasotyApp
 
         private void SaveBtn_Click(object sender, EventArgs e)
         {
-            if(prod == null)
+            if (prod == null)
             {
                 prod = (Product)productBindingSource.Current;
                 Program.db.Product.Add(prod);
             }
 
-            if(filePath != "")
+            if (filePath != "")
             {
                 prod.MainImagePath = filePath;
             }
@@ -64,7 +64,7 @@ namespace SalonKrasotyApp
                 Program.db.SaveChanges();
                 DialogResult = DialogResult.OK;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("Ошибка " + ex.Message);
             }
@@ -86,7 +86,7 @@ namespace SalonKrasotyApp
             {
                 FileInfo fileInf = new FileInfo(ofd.FileName);
                 long size = fileInf.Length;
-                if(size > 2000000)
+                if (size > 2000000)
                 {
                     MessageBox.Show("Размер файла больше 2 МБ.");
                     return;
