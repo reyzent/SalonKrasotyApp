@@ -26,43 +26,73 @@ namespace SalonKrasotyApp
 
             productSaleBindingSource.DataSource = Program.db.ProductSale
                                     .Where(s => s.ProductID == prod.ID)
-                                    .OrderBy(s => s.SaleDate).ToList();
+                                    .OrderByDescending(s => s.SaleDate).ToList();
             ProductLbl.Text = prod.Title;
         }
 
-        private void productSaleDataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
-        {
-
-        }
+        private static bool isSaleFormOpen = false;
 
         private void AddBtn_Click(object sender, EventArgs e)
         {
-            AddEditSaleFrm form = new AddEditSaleFrm();
-            form.prodSale = null;
-            DialogResult dr = form.ShowDialog();
-            if (dr == DialogResult.OK)
+            if (isSaleFormOpen)
             {
-                productSaleBindingSource.DataSource = Program.db.ProductSale.Where(p => p.ProductID == prod.ID).OrderBy(s => s.SaleDate).ToList();
+                MessageBox.Show("Форма редактирования продаж уже открыта!", "Внимание",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            isSaleFormOpen = true;
+            try
+            {
+                AddEditSaleFrm form = new AddEditSaleFrm();
+                form.prodSale = null;
+                DialogResult dr = form.ShowDialog();
+                if (dr == DialogResult.OK)
+                {
+                    productSaleBindingSource.DataSource = Program.db.ProductSale.Where(p => p.ProductID == prod.ID).OrderBy(s => s.SaleDate).ToList();
+                }
+            }
+            finally
+            {
+                isSaleFormOpen = false; 
             }
         }
 
         private void EditBtn_Click(object sender, EventArgs e)
         {
-            ProductSale prdSale = (ProductSale)productSaleBindingSource.Current;
-            AddEditSaleFrm form = new AddEditSaleFrm();
-            form.prodSale = prdSale;
-
-            DialogResult dr = form.ShowDialog();
-            if (dr == DialogResult.OK)
+            if (isSaleFormOpen)
             {
-                productSaleBindingSource.DataSource =
-                    Program.db.ProductSale.Where(p => p.ProductID == prod.ID).ToList();
+                MessageBox.Show("Форма редактирования продаж уже открыта!", "Внимание",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            ProductSale prdSale = (ProductSale)productSaleBindingSource.Current;
+            if (prdSale == null) return;
+
+            isSaleFormOpen = true;
+            try
+            {
+                AddEditSaleFrm form = new AddEditSaleFrm();
+                form.prodSale = prdSale;
+
+                DialogResult dr = form.ShowDialog();
+                if (dr == DialogResult.OK)
+                {
+                    productSaleBindingSource.DataSource = Program.db.ProductSale
+                        .Where(p => p.ProductID == prod.ID)
+                        .OrderByDescending(s => s.SaleDate)
+                        .ToList();
+                }
+            }
+            finally
+            {
+                isSaleFormOpen = false;
             }
         }
 
         private void DeleteBtn_Click(object sender, EventArgs e)
         {
-            // Получаем текущую продажу
             ProductSale prdSale = (ProductSale)productSaleBindingSource.Current;
             if (prdSale == null) return;
 
@@ -70,11 +100,19 @@ namespace SalonKrasotyApp
                     "Удаление данных о продаже товара", MessageBoxButtons.YesNo);
             if (dr == DialogResult.Yes)
             {
-                Program.db.ProductSale.Remove(prdSale);
-                Program.db.SaveChanges();
-                // Обновляем данные после удаления
-                productSaleBindingSource.DataSource = Program.db.ProductSale
-                    .Where(p => p.ProductID == prod.ID).ToList();
+                try
+                {
+                    Program.db.ProductSale.Remove(prdSale);
+                    Program.db.SaveChanges();
+                    // Обновляем данные после удаления
+                    productSaleBindingSource.DataSource = Program.db.ProductSale
+                        .Where(p => p.ProductID == prod.ID).ToList();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при удалении: {ex.Message}", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -83,6 +121,17 @@ namespace SalonKrasotyApp
             string title = FiltrCmb.Text;
             productSaleBindingSource.DataSource = Program.db.ProductSale.Where(p => p.Product.Title == title).ToList();
             ProductLbl.Text = title;
+        }
+
+        private void productSaleDataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            e.ThrowException = false;
+            e.Cancel = true;
+        }
+
+        private void ExitBtn_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

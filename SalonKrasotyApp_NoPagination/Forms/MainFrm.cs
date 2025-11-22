@@ -199,8 +199,8 @@ namespace SalonKrasotyApp
                 {
                     case "Название":
                         lstFormatData = DownChk.Checked
-                            ? lstFormatData.OrderByDescending(p => p.Title).ToList()
-                            : lstFormatData.OrderBy(p => p.Title).ToList();
+                            ? lstFormatData.OrderByDescending(p => p.Title ?? "").ToList()
+                            : lstFormatData.OrderBy(p => p.Title ?? "").ToList();
                         break;
                     case "Стоимость":
                         lstFormatData = DownChk.Checked
@@ -223,10 +223,21 @@ namespace SalonKrasotyApp
             }
         }
 
+        private static bool isEditFormOpen = false;
+
         private void EditProductBtn_Click(object sender, EventArgs e)
         {
+            // ПРОВЕРКА НА УЖЕ ОТКРЫТУЮ ФОРМУ
+            if (isEditFormOpen)
+            {
+                MessageBox.Show("Форма редактирования уже открыта!", "Внимание",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (productBindingSource.Current is Product prod)
             {
+                isEditFormOpen = true;
                 using (AddEditProductFrm frm = new AddEditProductFrm { prod = prod })
                 {
                     if (frm.ShowDialog() == DialogResult.OK)
@@ -234,36 +245,54 @@ namespace SalonKrasotyApp
                         Podgotovka();
                     }
                 }
+                isEditFormOpen = false;
             }
         }
 
         private void DelProductBtn_Click(object sender, EventArgs e)
         {
-            if (productBindingSource.Current is Product prd)
+            if (!(productBindingSource.Current is Product prd))
             {
-                DialogResult result = MessageBox.Show($"Вы действительно хотите удалить товар - {prd.Title}?",
-                    "Удаление товара", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                MessageBox.Show("Выберите товар для удаления!", "Внимание",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
-                if (result == DialogResult.Yes)
+            DialogResult result = MessageBox.Show($"Вы действительно хотите удалить товар - {prd.Title}?",
+                "Удаление товара", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                try
                 {
-                    try
+                    if (prd.ProductSale.Any())
                     {
-                        if (prd.ProductSale.Count > 0)
-                        {
-                            MessageBox.Show("Данный товар удалить нельзя, так как есть данные о продажах!",
-                                "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
+                        MessageBox.Show("Данный товар удалить нельзя, так как есть данные о продажах!",
+                            "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
 
-                        Program.db.Product.Remove(prd);
-                        Program.db.SaveChanges();
-                        Podgotovka();
-                    }
-                    catch (Exception ex)
+                    if (prd.Product1.Any())
                     {
-                        MessageBox.Show($"Ошибка при удалении: {ex.Message}", "Ошибка",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        prd.Product1.Clear();
                     }
+
+                    Program.db.Product.Remove(prd);
+                    Program.db.SaveChanges();
+                    Podgotovka();
+
+                    MessageBox.Show("Товар успешно удален!", "Успех",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
+                {
+                    MessageBox.Show($"Ошибка базы данных при удалении: {ex.InnerException?.Message}", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при удалении: {ex.Message}", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

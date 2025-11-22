@@ -43,10 +43,25 @@ namespace SalonKrasotyApp
                     this.Text = "Корректировка данных товара " + prod.ID.ToString();
                     TitleLbl.Text = "Изменение данных выбранного товара";
 
-                    if (!string.IsNullOrEmpty(prod.MainImagePath) && File.Exists(prod.MainImagePath))
+                    if (!string.IsNullOrEmpty(prod.MainImagePath))
                     {
-                        ProductPic.Image = Image.FromFile(prod.MainImagePath);
-                        filePath = prod.MainImagePath;
+                        try
+                        {
+                            if (File.Exists(prod.MainImagePath))
+                            {
+                                ProductPic.Image = Image.FromFile(prod.MainImagePath);
+                                filePath = prod.MainImagePath;
+                            }
+                            else
+                            {
+                                ProductPic.Image = Properties.Resources.beauty_logo;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Ошибка загрузки изображения: {ex.Message}");
+                            ProductPic.Image = Properties.Resources.beauty_logo;
+                        }
                     }
                     else
                     {
@@ -62,18 +77,32 @@ namespace SalonKrasotyApp
 
         private void SaveBtn_Click(object sender, EventArgs e)
         {
-            // Проверка обязательных полей
             if (string.IsNullOrWhiteSpace(titleTextBox.Text))
             {
-                MessageBox.Show("Введите название товара!");
+                MessageBox.Show("Введите название товара!", "Ошибка валидации",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 titleTextBox.Focus();
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(costTextBox.Text) || !decimal.TryParse(costTextBox.Text, out _))
+            if (string.IsNullOrWhiteSpace(costTextBox.Text) ||
+                !decimal.TryParse(costTextBox.Text, out decimal cost) ||
+                cost < 0)
             {
-                MessageBox.Show("Введите корректную стоимость!");
+                MessageBox.Show("Введите корректную стоимость (положительное число)!", "Ошибка валидации",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 costTextBox.Focus();
+                costTextBox.SelectAll();
+                return;
+            }
+
+            if (manufacturerIDComboBox.SelectedValue == null ||
+                !int.TryParse(manufacturerIDComboBox.SelectedValue.ToString(), out int manufacturerID) ||
+                manufacturerID == 0)
+            {
+                MessageBox.Show("Выберите производителя!", "Ошибка валидации",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                manufacturerIDComboBox.Focus();
                 return;
             }
 
@@ -81,24 +110,23 @@ namespace SalonKrasotyApp
             {
                 if (prod == null)
                 {
-                    // СОЗДАЕМ новый товар
                     prod = (Product)productBindingSource.Current;
                     Program.db.Product.Add(prod);
                 }
 
-                // Обновляем путь к изображению
                 if (!string.IsNullOrEmpty(filePath))
                 {
                     prod.MainImagePath = filePath;
                 }
 
                 Program.db.SaveChanges();
-                DialogResult = DialogResult.OK; // ВАЖНО: устанавливаем результат
-                this.Close(); // Закрываем форму
+                DialogResult = DialogResult.OK;
+                this.Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка сохранения: {ex.Message}");
+                MessageBox.Show($"Ошибка сохранения: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -153,10 +181,14 @@ namespace SalonKrasotyApp
             }
         }
 
-        // Добавьте валидацию для числовых полей
         private void costTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && e.KeyChar != ',')
+            {
+                e.Handled = true;
+            }
+
+            if (e.KeyChar == '-')
             {
                 e.Handled = true;
             }

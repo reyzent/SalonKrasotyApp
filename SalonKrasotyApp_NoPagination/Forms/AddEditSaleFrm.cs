@@ -36,17 +36,29 @@ namespace SalonKrasotyApp
 
         private void SaveBtn_Click(object sender, EventArgs e)
         {
+            // ПРОВЕРКА ВАЛИДНОСТИ ДАННЫХ
+            if (productIDComboBox.SelectedValue == null || (int)productIDComboBox.SelectedValue == 0)
+            {
+                MessageBox.Show("Выберите товар!", "Ошибка валидации",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(quantityTextBox.Text) ||
+                !int.TryParse(quantityTextBox.Text, out int quantity) || quantity <= 0)
+            {
+                MessageBox.Show("Введите корректное количество (целое положительное число)!", "Ошибка валидации",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                quantityTextBox.Focus();
+                return;
+            }
+
             if (prodSale == null)
             {
                 prodSale = (ProductSale)productSaleBindingSource.Current;
-                if (prodSale.ProductID == 0 || prodSale.Quantity == 0)
-                {
-                    MessageBox.Show("Не все данные заданы!");
-                    prodSale = null;
-                    return;
-                }
                 Program.db.ProductSale.Add(prodSale);
             }
+
             try
             {
                 Program.db.SaveChanges();
@@ -54,7 +66,8 @@ namespace SalonKrasotyApp
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show($"Ошибка сохранения: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

@@ -10,25 +10,20 @@ namespace SalonKrasotyApp
 {
     public partial class MainFrm : Form
     {
-        // Константы
         private const int nDataInPage = 20;
         private const int nButtons = 4;
 
-        // Переменные состояния
         private int nPageAll = 0;
         private int nPageFirst = 1;
         private int nPageCurrent = 1;
 
-        // Данные
         private string search = "";
         private string sort = "Без сортировки";
         private string filtr = "Все производители";
         private List<Product> lstFormatData = new List<Product>();
 
-        // Элементы управления
         private Button[] btnsList = new Button[nButtons];
 
-        // Статические данные
         public static List<int> lstSelectedIdData = new List<int>();
 
         public MainFrm()
@@ -49,17 +44,13 @@ namespace SalonKrasotyApp
         {
             try
             {
-                // Инициализация UI
                 nPageCurrent = 1;
                 SortCmb.SelectedIndex = 0;
 
-                // Загрузка данных производителей ПЕРВОЙ
                 LoadManufacturers();
 
-                // Настройка фильтров
                 SetupFilters();
 
-                // Загрузка товаров
                 Podgotovka();
             }
             catch (Exception ex)
@@ -73,7 +64,6 @@ namespace SalonKrasotyApp
         {
             manufacturerBindingSource.DataSource = Program.db.Manufacturer.ToList();
 
-            // Принудительная настройка ComboBox столбца
             DataGridViewComboBoxColumn comboColumn = productDataGridView.Columns["dataGridViewTextBoxColumn6"] as DataGridViewComboBoxColumn;
             if (comboColumn != null)
             {
@@ -96,13 +86,10 @@ namespace SalonKrasotyApp
             FiltrCmb.SelectedIndex = 0;
         }
 
-        // ОБРАБОТЧИК ОШИБОК
         private void productDataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             e.ThrowException = false;
             e.Cancel = true;
-
-            // Минимальная обработка
             Console.WriteLine($"DataGridView error ignored: {e.Exception.Message}");
         }
 
@@ -124,11 +111,10 @@ namespace SalonKrasotyApp
             }
             catch
             {
-                // Игнорируем ошибки форматирования
+
             }
         }
 
-        // ОБРАБОТЧИКИ СОБЫТИЙ ФИЛЬТРОВ
         private void FiltrCmb_SelectedIndexChanged(object sender, EventArgs e)
         {
             filtr = FiltrCmb.Text;
@@ -152,26 +138,16 @@ namespace SalonKrasotyApp
             Podgotovka();
         }
 
-        // ОСНОВНОЙ МЕТОД ПОДГОТОВКИ ДАННЫХ
         public void Podgotovka()
         {
             productDataGridView.SuspendLayout();
 
             try
             {
-                // Получаем базовые данные
                 lstFormatData = Program.db.Product.ToList();
-
-                // Применяем фильтрацию
                 ApplyFiltering();
-
-                // Применяем поиск
                 ApplySearch();
-
-                // Применяем сортировку
                 ApplySorting();
-
-                // Обновляем отображение
                 UpdatePagination();
                 ShowData();
 
@@ -205,12 +181,6 @@ namespace SalonKrasotyApp
                 lstFormatData = lstFormatData
                     .Where(p => p.Title != null && p.Title.Contains(search))
                     .ToList();
-
-                if (lstFormatData.Count == 0)
-                {
-                    MessageBox.Show($"Строка '{search}' нигде не найдена!", "Результат поиска",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
             }
         }
 
@@ -222,8 +192,8 @@ namespace SalonKrasotyApp
                 {
                     case "Название":
                         lstFormatData = DownChk.Checked
-                            ? lstFormatData.OrderByDescending(p => p.Title).ToList()
-                            : lstFormatData.OrderBy(p => p.Title).ToList();
+                            ? lstFormatData.OrderByDescending(p => p.Title ?? "").ToList()
+                            : lstFormatData.OrderBy(p => p.Title ?? "").ToList();
                         break;
                     case "Стоимость":
                         lstFormatData = DownChk.Checked
@@ -246,7 +216,7 @@ namespace SalonKrasotyApp
             if (lstFormatData == null || !lstFormatData.Any())
             {
                 productBindingSource.DataSource = new List<Product>();
-                RangeLbl.Text = "Товары не найдены";
+                RangeLbl.Text = $"По запросу '{search}' ничего не найдено";
                 return;
             }
 
@@ -273,7 +243,6 @@ namespace SalonKrasotyApp
                 btnsList[i].BackColor = nPage == nPageCurrent ? Color.LightBlue : Color.White;
             }
 
-            // Настройка кнопок навигации
             LeftBtn.Enabled = nPageCurrent > 1;
             LeftBtn.BackColor = LeftBtn.Enabled ? Color.White : Color.LightGray;
 
@@ -281,7 +250,6 @@ namespace SalonKrasotyApp
             RightBtn.BackColor = RightBtn.Enabled ? Color.White : Color.LightGray;
         }
 
-        // ОБРАБОТЧИКИ КНОПОК ПАГИНАЦИИ
         private void LeftBtn_Click(object sender, EventArgs e)
         {
             if (nPageCurrent > nPageFirst)
@@ -322,7 +290,6 @@ namespace SalonKrasotyApp
             }
         }
 
-        // ОБРАБОТЧИКИ ДЕЙСТВИЙ С ТОВАРАМИ
         private void AddProductBtn_Click(object sender, EventArgs e)
         {
             using (AddEditProductFrm frm = new AddEditProductFrm { prod = null })
@@ -334,10 +301,20 @@ namespace SalonKrasotyApp
             }
         }
 
+        private static bool isEditFormOpen = false;
+
         private void EditProductBtn_Click(object sender, EventArgs e)
         {
+            if (isEditFormOpen)
+            {
+                MessageBox.Show("Форма редактирования уже открыта!", "Внимание",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (productBindingSource.Current is Product prod)
             {
+                isEditFormOpen = true;
                 using (AddEditProductFrm frm = new AddEditProductFrm { prod = prod })
                 {
                     if (frm.ShowDialog() == DialogResult.OK)
@@ -345,36 +322,54 @@ namespace SalonKrasotyApp
                         Podgotovka();
                     }
                 }
+                isEditFormOpen = false;
             }
         }
 
         private void DelProductBtn_Click(object sender, EventArgs e)
         {
-            if (productBindingSource.Current is Product prd)
+            if (!(productBindingSource.Current is Product prd))
             {
-                DialogResult result = MessageBox.Show($"Вы действительно хотите удалить товар - {prd.Title}?",
-                    "Удаление товара", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                MessageBox.Show("Выберите товар для удаления!", "Внимание",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
 
-                if (result == DialogResult.Yes)
+            DialogResult result = MessageBox.Show($"Вы действительно хотите удалить товар - {prd.Title}?",
+                "Удаление товара", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                try
                 {
-                    try
+                    if (prd.ProductSale.Any())
                     {
-                        if (prd.ProductSale.Count > 0)
-                        {
-                            MessageBox.Show("Данный товар удалить нельзя, так как есть данные о продажах!",
-                                "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
+                        MessageBox.Show("Данный товар удалить нельзя, так как есть данные о продажах!",
+                            "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
 
-                        Program.db.Product.Remove(prd);
-                        Program.db.SaveChanges();
-                        Podgotovka();
-                    }
-                    catch (Exception ex)
+                    if (prd.Product1.Any())
                     {
-                        MessageBox.Show($"Ошибка при удалении: {ex.Message}", "Ошибка",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        prd.Product1.Clear();
                     }
+
+                    Program.db.Product.Remove(prd);
+                    Program.db.SaveChanges();
+                    Podgotovka();
+
+                    MessageBox.Show("Товар успешно удален!", "Успех",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (System.Data.Entity.Infrastructure.DbUpdateException ex)
+                {
+                    MessageBox.Show($"Ошибка базы данных при удалении: {ex.InnerException?.Message}", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка при удалении: {ex.Message}", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -427,8 +422,5 @@ namespace SalonKrasotyApp
                 }
             }
         }
-
-        // Заглушки для неиспользуемых обработчиков
-        private void button2_Click(object sender, EventArgs e) { }
     }
 }

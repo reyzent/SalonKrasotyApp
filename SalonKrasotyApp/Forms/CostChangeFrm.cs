@@ -27,15 +27,36 @@ namespace SalonKrasotyApp
         {
             if ((AddCostTxt.Text == ""))
             {
-                MessageBox.Show("Не задана величина изменения цены.");
+                MessageBox.Show("Не задана величина изменения цены.", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            decimal delta = Convert.ToDecimal(AddCostTxt.Text);
+
+            if (!decimal.TryParse(AddCostTxt.Text, out decimal delta))
+            {
+                MessageBox.Show("Введите корректное числовое значение!", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // ПРОВЕРКА ЧТО ЦЕНА НЕ СТАНЕТ ОТРИЦАТЕЛЬНОЙ
+            foreach (int id in MainFrm.lstSelectedIdData)
+            {
+                Product prd = Program.db.Product.Find(id);
+                if (prd.Cost + delta < 0)
+                {
+                    MessageBox.Show($"Стоимость товара '{prd.Title}' не может быть отрицательной!", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
             foreach (int id in MainFrm.lstSelectedIdData)
             {
                 Product prd = Program.db.Product.Find(id);
                 prd.Cost += delta;
             }
+
             try
             {
                 Program.db.SaveChanges();
@@ -43,7 +64,8 @@ namespace SalonKrasotyApp
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show($"Ошибка сохранения: {ex.Message}", "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

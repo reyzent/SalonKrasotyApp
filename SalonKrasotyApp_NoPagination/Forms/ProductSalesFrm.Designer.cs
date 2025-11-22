@@ -37,16 +37,16 @@
             this.AddBtn = new System.Windows.Forms.Button();
             this.ExitBtn = new System.Windows.Forms.Button();
             this.productSaleDataGridView = new System.Windows.Forms.DataGridView();
-            this.dataGridViewComboBoxColumn1 = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.productSaleBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.productBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.iDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SaleDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Product = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.productBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.Quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.productSaleBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dataGridViewComboBoxColumn1 = new System.Windows.Forms.DataGridViewComboBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.productSaleDataGridView)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.productSaleBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.productBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.productSaleBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // FiltrCmb
@@ -116,6 +116,7 @@
             this.ExitBtn.TabIndex = 30;
             this.ExitBtn.Text = "Выйти";
             this.ExitBtn.UseVisualStyleBackColor = true;
+            this.ExitBtn.Click += new System.EventHandler(this.ExitBtn_Click);
             // 
             // productSaleDataGridView
             // 
@@ -135,24 +136,7 @@
             this.productSaleDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.productSaleDataGridView.Size = new System.Drawing.Size(554, 231);
             this.productSaleDataGridView.TabIndex = 36;
-            // 
-            // dataGridViewComboBoxColumn1
-            // 
-            this.dataGridViewComboBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridViewComboBoxColumn1.DataPropertyName = "Product";
-            this.dataGridViewComboBoxColumn1.HeaderText = "Товар";
-            this.dataGridViewComboBoxColumn1.Name = "dataGridViewComboBoxColumn1";
-            this.dataGridViewComboBoxColumn1.ReadOnly = true;
-            this.dataGridViewComboBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridViewComboBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // productSaleBindingSource
-            // 
-            this.productSaleBindingSource.DataSource = typeof(SalonKrasotyApp.ModelEF.ProductSale);
-            // 
-            // productBindingSource
-            // 
-            this.productBindingSource.DataSource = typeof(SalonKrasotyApp.ModelEF.Product);
+            this.productSaleDataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.productSaleDataGridView_DataError);
             // 
             // iDDataGridViewTextBoxColumn
             // 
@@ -184,12 +168,30 @@
             this.Product.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.Product.ValueMember = "ID";
             // 
+            // productBindingSource
+            // 
+            this.productBindingSource.DataSource = typeof(SalonKrasotyApp.ModelEF.Product);
+            // 
             // Quantity
             // 
             this.Quantity.DataPropertyName = "Quantity";
             this.Quantity.HeaderText = "Количество";
             this.Quantity.Name = "Quantity";
             this.Quantity.ReadOnly = true;
+            // 
+            // productSaleBindingSource
+            // 
+            this.productSaleBindingSource.DataSource = typeof(SalonKrasotyApp.ModelEF.ProductSale);
+            // 
+            // dataGridViewComboBoxColumn1
+            // 
+            this.dataGridViewComboBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridViewComboBoxColumn1.DataPropertyName = "Product";
+            this.dataGridViewComboBoxColumn1.HeaderText = "Товар";
+            this.dataGridViewComboBoxColumn1.Name = "dataGridViewComboBoxColumn1";
+            this.dataGridViewComboBoxColumn1.ReadOnly = true;
+            this.dataGridViewComboBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewComboBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // ProductSalesFrm
             // 
@@ -208,8 +210,8 @@
             this.Text = "Данные о продажах товара";
             this.Load += new System.EventHandler(this.ProductSalesFrm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.productSaleDataGridView)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.productSaleBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.productBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.productSaleBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -140,6 +140,7 @@
             this.costTextBox.Name = "costTextBox";
             this.costTextBox.Size = new System.Drawing.Size(140, 23);
             this.costTextBox.TabIndex = 2;
+            this.costTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.costTextBox_KeyPress);
             // 
             // productBindingSource
             // 

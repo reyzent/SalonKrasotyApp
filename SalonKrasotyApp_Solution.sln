@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.14.36623.8
+# Visual Studio Version 18
+VisualStudioVersion = 18.0.11217.181 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalonKrasotyApp", "SalonKrasotyApp\SalonKrasotyApp.csproj", "{37A47F9E-FE37-4EEA-A391-CF07466E52DB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalonKrasotyApp_NoPagination", "SalonKrasotyApp_NoPagination\SalonKrasotyApp_NoPagination.csproj", "{FE664D67-660B-4B3D-8FCE-B08739582717}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SalonKrasotyApp_2", "SalonKrasotyApp_2\SalonKrasotyApp_2.csproj", "{D2EBAC01-2582-47A8-B343-94A18D8B6B96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{FE664D67-660B-4B3D-8FCE-B08739582717}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE664D67-660B-4B3D-8FCE-B08739582717}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE664D67-660B-4B3D-8FCE-B08739582717}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2EBAC01-2582-47A8-B343-94A18D8B6B96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2EBAC01-2582-47A8-B343-94A18D8B6B96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2EBAC01-2582-47A8-B343-94A18D8B6B96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2EBAC01-2582-47A8-B343-94A18D8B6B96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

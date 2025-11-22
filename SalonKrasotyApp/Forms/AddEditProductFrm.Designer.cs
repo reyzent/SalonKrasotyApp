@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label costLabel;
             System.Windows.Forms.Label descriptionLabel;
             System.Windows.Forms.Label iDLabel;
@@ -37,13 +36,13 @@
             System.Windows.Forms.Label manufacturerIDLabel;
             System.Windows.Forms.Label titleLabel;
             this.costTextBox = new System.Windows.Forms.TextBox();
-            this.productBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.productBindingSource = new System.Windows.Forms.BindingSource();
             this.descriptionTextBox = new System.Windows.Forms.TextBox();
             this.iDTextBox = new System.Windows.Forms.TextBox();
             this.isActiveCheckBox = new System.Windows.Forms.CheckBox();
             this.mainImagePathTextBox = new System.Windows.Forms.TextBox();
             this.manufacturerIDComboBox = new System.Windows.Forms.ComboBox();
-            this.manufacturerBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.manufacturerBindingSource = new System.Windows.Forms.BindingSource();
             this.titleTextBox = new System.Windows.Forms.TextBox();
             this.TitleLbl = new System.Windows.Forms.Label();
             this.SaveBtn = new System.Windows.Forms.Button();
@@ -140,6 +139,7 @@
             this.costTextBox.Name = "costTextBox";
             this.costTextBox.Size = new System.Drawing.Size(202, 23);
             this.costTextBox.TabIndex = 2;
+            this.costTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.costTextBox_KeyPress);
             // 
             // productBindingSource
             // 
@@ -287,7 +287,7 @@
             this.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AddEditProductFrm";
-            this.Text = "AddEditProductFrm";
+            this.Text = "Добавление и редактирование товара";
             this.Load += new System.EventHandler(this.AddEditProductFrm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.productBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.manufacturerBindingSource)).EndInit();

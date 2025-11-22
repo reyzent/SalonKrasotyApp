@@ -33,14 +33,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainFrm));
             this.label1 = new System.Windows.Forms.Label();
             this.productDataGridView = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.manufacturerBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.productBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -55,6 +47,14 @@
             this.SalesBtn = new System.Windows.Forms.Button();
             this.AttachedProductBtn = new System.Windows.Forms.Button();
             this.CostChangeBtn = new System.Windows.Forms.Button();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.manufacturerBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.productBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.productDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.manufacturerBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.productBindingSource)).BeginInit();
@@ -64,7 +64,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold);
-            this.label1.Location = new System.Drawing.Point(329, 9);
+            this.label1.Location = new System.Drawing.Point(376, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(245, 24);
             this.label1.TabIndex = 0;
@@ -84,16 +84,153 @@
             this.dataGridViewTextBoxColumn3,
             this.dataGridViewCheckBoxColumn1});
             this.productDataGridView.DataSource = this.productBindingSource;
-            this.productDataGridView.Location = new System.Drawing.Point(15, 86);
+            this.productDataGridView.Location = new System.Drawing.Point(17, 86);
             this.productDataGridView.Name = "productDataGridView";
             this.productDataGridView.ReadOnly = true;
             this.productDataGridView.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.productDataGridView.RowTemplate.Height = 35;
             this.productDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.productDataGridView.Size = new System.Drawing.Size(910, 497);
+            this.productDataGridView.Size = new System.Drawing.Size(1040, 497);
             this.productDataGridView.TabIndex = 2;
             this.productDataGridView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.productDataGridView_CellFormatting);
             this.productDataGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.productDataGridView_DataError);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(14, 37);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(48, 17);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Поиск";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(279, 36);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(86, 17);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Сортировка";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(862, 37);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(91, 17);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Фильтрация";
+            // 
+            // SearchTxt
+            // 
+            this.SearchTxt.Location = new System.Drawing.Point(17, 55);
+            this.SearchTxt.Name = "SearchTxt";
+            this.SearchTxt.Size = new System.Drawing.Size(188, 23);
+            this.SearchTxt.TabIndex = 7;
+            this.SearchTxt.TextChanged += new System.EventHandler(this.SearchTxt_TextChanged);
+            // 
+            // SortCmb
+            // 
+            this.SortCmb.FormattingEnabled = true;
+            this.SortCmb.Items.AddRange(new object[] {
+            "Без сортировки",
+            "Название",
+            "Стоимость"});
+            this.SortCmb.Location = new System.Drawing.Point(282, 54);
+            this.SortCmb.Name = "SortCmb";
+            this.SortCmb.Size = new System.Drawing.Size(188, 24);
+            this.SortCmb.TabIndex = 8;
+            this.SortCmb.SelectedIndexChanged += new System.EventHandler(this.SortCmb_SelectedIndexChanged);
+            // 
+            // DownChk
+            // 
+            this.DownChk.AutoSize = true;
+            this.DownChk.Location = new System.Drawing.Point(478, 56);
+            this.DownChk.Name = "DownChk";
+            this.DownChk.Size = new System.Drawing.Size(115, 21);
+            this.DownChk.TabIndex = 9;
+            this.DownChk.Text = "По убыванию";
+            this.DownChk.UseVisualStyleBackColor = true;
+            this.DownChk.CheckedChanged += new System.EventHandler(this.DownChk_CheckedChanged);
+            // 
+            // FiltrCmb
+            // 
+            this.FiltrCmb.FormattingEnabled = true;
+            this.FiltrCmb.Location = new System.Drawing.Point(865, 56);
+            this.FiltrCmb.Name = "FiltrCmb";
+            this.FiltrCmb.Size = new System.Drawing.Size(188, 24);
+            this.FiltrCmb.TabIndex = 10;
+            this.FiltrCmb.SelectedIndexChanged += new System.EventHandler(this.FiltrCmb_SelectedIndexChanged);
+            // 
+            // RangeLbl
+            // 
+            this.RangeLbl.AutoSize = true;
+            this.RangeLbl.Location = new System.Drawing.Point(447, 586);
+            this.RangeLbl.Name = "RangeLbl";
+            this.RangeLbl.Size = new System.Drawing.Size(120, 17);
+            this.RangeLbl.TabIndex = 11;
+            this.RangeLbl.Text = "////////////////////////////";
+            // 
+            // AddProductBtn
+            // 
+            this.AddProductBtn.Location = new System.Drawing.Point(1064, 86);
+            this.AddProductBtn.Name = "AddProductBtn";
+            this.AddProductBtn.Size = new System.Drawing.Size(198, 23);
+            this.AddProductBtn.TabIndex = 12;
+            this.AddProductBtn.Text = "Добавить товар";
+            this.AddProductBtn.UseVisualStyleBackColor = true;
+            this.AddProductBtn.Click += new System.EventHandler(this.AddProductBtn_Click);
+            // 
+            // EditProductBtn
+            // 
+            this.EditProductBtn.Location = new System.Drawing.Point(1064, 115);
+            this.EditProductBtn.Name = "EditProductBtn";
+            this.EditProductBtn.Size = new System.Drawing.Size(198, 23);
+            this.EditProductBtn.TabIndex = 13;
+            this.EditProductBtn.Text = "Изменить товар";
+            this.EditProductBtn.UseVisualStyleBackColor = true;
+            this.EditProductBtn.Click += new System.EventHandler(this.EditProductBtn_Click);
+            // 
+            // DelProductBtn
+            // 
+            this.DelProductBtn.Location = new System.Drawing.Point(1064, 144);
+            this.DelProductBtn.Name = "DelProductBtn";
+            this.DelProductBtn.Size = new System.Drawing.Size(198, 23);
+            this.DelProductBtn.TabIndex = 14;
+            this.DelProductBtn.Text = "Удалить товар";
+            this.DelProductBtn.UseVisualStyleBackColor = true;
+            this.DelProductBtn.Click += new System.EventHandler(this.DelProductBtn_Click);
+            // 
+            // SalesBtn
+            // 
+            this.SalesBtn.Location = new System.Drawing.Point(1064, 273);
+            this.SalesBtn.Name = "SalesBtn";
+            this.SalesBtn.Size = new System.Drawing.Size(198, 23);
+            this.SalesBtn.TabIndex = 17;
+            this.SalesBtn.Text = "Продажи товара";
+            this.SalesBtn.UseVisualStyleBackColor = true;
+            this.SalesBtn.Click += new System.EventHandler(this.SalesBtn_Click);
+            // 
+            // AttachedProductBtn
+            // 
+            this.AttachedProductBtn.Location = new System.Drawing.Point(1064, 244);
+            this.AttachedProductBtn.Name = "AttachedProductBtn";
+            this.AttachedProductBtn.Size = new System.Drawing.Size(198, 23);
+            this.AttachedProductBtn.TabIndex = 16;
+            this.AttachedProductBtn.Text = "Рекомендуемые товары";
+            this.AttachedProductBtn.UseVisualStyleBackColor = true;
+            this.AttachedProductBtn.Click += new System.EventHandler(this.AttachedProductBtn_Click);
+            // 
+            // CostChangeBtn
+            // 
+            this.CostChangeBtn.Location = new System.Drawing.Point(1064, 215);
+            this.CostChangeBtn.Name = "CostChangeBtn";
+            this.CostChangeBtn.Size = new System.Drawing.Size(198, 23);
+            this.CostChangeBtn.TabIndex = 15;
+            this.CostChangeBtn.Text = "Изменить стоимость";
+            this.CostChangeBtn.UseVisualStyleBackColor = true;
+            this.CostChangeBtn.Click += new System.EventHandler(this.CostChangeBtn_Click);
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -102,7 +239,7 @@
             this.dataGridViewTextBoxColumn1.HeaderText = "ID";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Width = 44;
+            this.dataGridViewTextBoxColumn1.Width = 46;
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -133,7 +270,7 @@
             this.dataGridViewTextBoxColumn6.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewTextBoxColumn6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.dataGridViewTextBoxColumn6.ValueMember = "ID";
-            this.dataGridViewTextBoxColumn6.Width = 122;
+            this.dataGridViewTextBoxColumn6.Width = 135;
             // 
             // manufacturerBindingSource
             // 
@@ -149,7 +286,7 @@
             this.dataGridViewTextBoxColumn3.HeaderText = "Стоимость";
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             this.dataGridViewTextBoxColumn3.ReadOnly = true;
-            this.dataGridViewTextBoxColumn3.Width = 94;
+            this.dataGridViewTextBoxColumn3.Width = 103;
             // 
             // dataGridViewCheckBoxColumn1
             // 
@@ -163,148 +300,12 @@
             // 
             this.productBindingSource.DataSource = typeof(SalonKrasotyApp.ModelEF.Product);
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 37);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 16);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Поиск";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(265, 37);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(76, 16);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Сортировка";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(612, 37);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(79, 16);
-            this.label5.TabIndex = 6;
-            this.label5.Text = "Фильтрация";
-            // 
-            // SearchTxt
-            // 
-            this.SearchTxt.Location = new System.Drawing.Point(15, 55);
-            this.SearchTxt.Name = "SearchTxt";
-            this.SearchTxt.Size = new System.Drawing.Size(165, 23);
-            this.SearchTxt.TabIndex = 7;
-            this.SearchTxt.TextChanged += new System.EventHandler(this.SearchTxt_TextChanged);
-            // 
-            // SortCmb
-            // 
-            this.SortCmb.FormattingEnabled = true;
-            this.SortCmb.Items.AddRange(new object[] {
-            "Без сортировки",
-            "Название",
-            "Стоимость"});
-            this.SortCmb.Location = new System.Drawing.Point(268, 55);
-            this.SortCmb.Name = "SortCmb";
-            this.SortCmb.Size = new System.Drawing.Size(165, 24);
-            this.SortCmb.TabIndex = 8;
-            this.SortCmb.SelectedIndexChanged += new System.EventHandler(this.SortCmb_SelectedIndexChanged);
-            // 
-            // DownChk
-            // 
-            this.DownChk.AutoSize = true;
-            this.DownChk.Location = new System.Drawing.Point(455, 55);
-            this.DownChk.Name = "DownChk";
-            this.DownChk.Size = new System.Drawing.Size(83, 20);
-            this.DownChk.TabIndex = 9;
-            this.DownChk.Text = "убывание";
-            this.DownChk.UseVisualStyleBackColor = true;
-            this.DownChk.CheckedChanged += new System.EventHandler(this.DownChk_CheckedChanged);
-            // 
-            // FiltrCmb
-            // 
-            this.FiltrCmb.FormattingEnabled = true;
-            this.FiltrCmb.Location = new System.Drawing.Point(615, 56);
-            this.FiltrCmb.Name = "FiltrCmb";
-            this.FiltrCmb.Size = new System.Drawing.Size(165, 24);
-            this.FiltrCmb.TabIndex = 10;
-            this.FiltrCmb.SelectedIndexChanged += new System.EventHandler(this.FiltrCmb_SelectedIndexChanged);
-            // 
-            // RangeLbl
-            // 
-            this.RangeLbl.AutoSize = true;
-            this.RangeLbl.Location = new System.Drawing.Point(391, 586);
-            this.RangeLbl.Name = "RangeLbl";
-            this.RangeLbl.Size = new System.Drawing.Size(147, 16);
-            this.RangeLbl.TabIndex = 11;
-            this.RangeLbl.Text = "////////////////////////////";
-            // 
-            // AddProductBtn
-            // 
-            this.AddProductBtn.Location = new System.Drawing.Point(15, 605);
-            this.AddProductBtn.Name = "AddProductBtn";
-            this.AddProductBtn.Size = new System.Drawing.Size(148, 23);
-            this.AddProductBtn.TabIndex = 12;
-            this.AddProductBtn.Text = "Добавить товар";
-            this.AddProductBtn.UseVisualStyleBackColor = true;
-            this.AddProductBtn.Click += new System.EventHandler(this.AddProductBtn_Click);
-            // 
-            // EditProductBtn
-            // 
-            this.EditProductBtn.Location = new System.Drawing.Point(169, 605);
-            this.EditProductBtn.Name = "EditProductBtn";
-            this.EditProductBtn.Size = new System.Drawing.Size(148, 23);
-            this.EditProductBtn.TabIndex = 13;
-            this.EditProductBtn.Text = "Изменить товар";
-            this.EditProductBtn.UseVisualStyleBackColor = true;
-            this.EditProductBtn.Click += new System.EventHandler(this.EditProductBtn_Click);
-            // 
-            // DelProductBtn
-            // 
-            this.DelProductBtn.Location = new System.Drawing.Point(323, 605);
-            this.DelProductBtn.Name = "DelProductBtn";
-            this.DelProductBtn.Size = new System.Drawing.Size(148, 23);
-            this.DelProductBtn.TabIndex = 14;
-            this.DelProductBtn.Text = "Удалить товар";
-            this.DelProductBtn.UseVisualStyleBackColor = true;
-            this.DelProductBtn.Click += new System.EventHandler(this.DelProductBtn_Click);
-            // 
-            // SalesBtn
-            // 
-            this.SalesBtn.Location = new System.Drawing.Point(323, 634);
-            this.SalesBtn.Name = "SalesBtn";
-            this.SalesBtn.Size = new System.Drawing.Size(148, 23);
-            this.SalesBtn.TabIndex = 17;
-            this.SalesBtn.Text = "Продажи товара";
-            this.SalesBtn.UseVisualStyleBackColor = true;
-            this.SalesBtn.Click += new System.EventHandler(this.SalesBtn_Click);
-            // 
-            // AttachedProductBtn
-            // 
-            this.AttachedProductBtn.Location = new System.Drawing.Point(169, 634);
-            this.AttachedProductBtn.Name = "AttachedProductBtn";
-            this.AttachedProductBtn.Size = new System.Drawing.Size(148, 23);
-            this.AttachedProductBtn.TabIndex = 16;
-            this.AttachedProductBtn.Text = "Рекоменд. товары";
-            this.AttachedProductBtn.UseVisualStyleBackColor = true;
-            this.AttachedProductBtn.Click += new System.EventHandler(this.AttachedProductBtn_Click);
-            // 
-            // CostChangeBtn
-            // 
-            this.CostChangeBtn.Location = new System.Drawing.Point(15, 634);
-            this.CostChangeBtn.Name = "CostChangeBtn";
-            this.CostChangeBtn.Size = new System.Drawing.Size(148, 23);
-            this.CostChangeBtn.TabIndex = 15;
-            this.CostChangeBtn.Text = "Изменить стоим. на ...";
-            this.CostChangeBtn.UseVisualStyleBackColor = true;
-            this.CostChangeBtn.Click += new System.EventHandler(this.CostChangeBtn_Click);
-            // 
             // MainFrm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(934, 673);
+            this.BackColor = System.Drawing.Color.LightCyan;
+            this.ClientSize = new System.Drawing.Size(1272, 618);
             this.Controls.Add(this.SalesBtn);
             this.Controls.Add(this.AttachedProductBtn);
             this.Controls.Add(this.CostChangeBtn);
@@ -321,10 +322,10 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.productDataGridView);
             this.Controls.Add(this.label1);
-            this.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
             this.Name = "MainFrm";
             this.Text = "Информационная система \"Салон красоты\"";
             this.Load += new System.EventHandler(this.MainFrm_Load);

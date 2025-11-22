@@ -30,14 +30,19 @@ namespace SalonKrasotyApp
             dr = form.ShowDialog();
             if (dr == DialogResult.OK)
             {
-                productBindingSource.DataSource =
-                            prod.Product1.OrderBy(p => p.Title).ToList();
+                productBindingSource.DataSource = prod.Product1.OrderBy(p => p.Title).ToList();
             }
         }
 
         private void ExitBtn_Click(object sender, EventArgs e)
         {
             DialogResult = dr;
+        }
+
+        private void productDataGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            e.ThrowException = false;
+            e.Cancel = true;
         }
     }
 }
