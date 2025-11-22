@@ -84,7 +84,7 @@ namespace SalonKrasotyApp
                 $"Удалить товар '{oldprod.Title}' из рекомендаций?",
                 "Подтверждение удаления",
                 MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question 
+                MessageBoxIcon.Question
                 );
 
             if (result != DialogResult.Yes) return;

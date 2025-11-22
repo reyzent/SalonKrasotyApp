@@ -54,15 +54,9 @@ namespace SalonKrasotyApp_3
             ID = prd.ID;
             Title = $"{prd.Title} ({prd.Product1.Count})";
             Description = prd.Description;
-            if (prd.ManufacturerID.HasValue)
-                Manufacturer = prd.Manufacturer.Name;
-            else
-                Manufacturer = "";
+            Manufacturer = prd.ManufacturerID.HasValue ? prd.Manufacturer.Name : "";
             Cost = prd.Cost;
-            if (prd.MainImagePath != "")
-                Picture = Image.FromFile(prd.MainImagePath.Trim());
-            else
-                Picture = Properties.Resources.beauty_logo;
+            Picture = prd.MainImagePath != "" ? Image.FromFile(prd.MainImagePath.Trim()) : Properties.Resources.beauty_logo;
             DateTime today = DateTime.Today;
             DateTime date1 = today.AddDays(-30);
             int nSale = prd.ProductSale
@@ -74,14 +68,7 @@ namespace SalonKrasotyApp_3
             {
                 ActivePic.BackColor = Color.Red;
             }
-            if (MainFrm.lstSelectedIdData.IndexOf(ID) != -1)
-            {
-                BackColor = Color.LightGray;
-            }
-            else
-            {
-                BackColor = Color.White;
-            }
+            BackColor = MainFrm.lstSelectedIdData.IndexOf(ID) != -1 ? Color.LightGray : Color.White;
         }
 
         public delegate void MyHandler(string message, int id);
@@ -95,7 +82,7 @@ namespace SalonKrasotyApp_3
                 if (e.Button == MouseButtons.Right)
                 {
                     if (MainFrm.lstSelectedIdData.IndexOf(ID) != -1)
-                    { 
+                    {
                         this.BackColor = Color.White;
                         MainFrm.lstSelectedIdData.Remove(ID);
                     }
@@ -108,7 +95,7 @@ namespace SalonKrasotyApp_3
                     Notify("выбрать", ID);
                 }
                 if (e.Button == MouseButtons.Left)
-                {   
+                {
                     Notify("изменить", ID);
                 }
             }

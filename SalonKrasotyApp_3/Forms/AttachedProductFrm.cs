@@ -1,12 +1,7 @@
 ﻿using SalonKrasotyApp_3.ModelEF;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SalonKrasotyApp_3.Forms
@@ -31,7 +26,7 @@ namespace SalonKrasotyApp_3.Forms
             AddEditAttachedFrm form = new AddEditAttachedFrm();
             form.prd = prd;
             DialogResult dr = form.ShowDialog();
-            if (dr == DialogResult.OK) 
+            if (dr == DialogResult.OK)
             {
                 productBindingSource.DataSource = prd.Product1.OrderBy(p => p.Title).ToList();
             }

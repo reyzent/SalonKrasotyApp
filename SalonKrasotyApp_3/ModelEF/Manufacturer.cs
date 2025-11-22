@@ -4,7 +4,6 @@ namespace SalonKrasotyApp_3.ModelEF
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     [Table("Manufacturer")]
     public partial class Manufacturer

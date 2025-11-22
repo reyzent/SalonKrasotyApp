@@ -1,12 +1,5 @@
 ﻿using SalonKrasotyApp_2.ModelEF;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SalonKrasotyApp_2.Forms
@@ -82,7 +75,7 @@ namespace SalonKrasotyApp_2.Forms
 
         private void AddCostTxt_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if ((e.KeyChar < '0' || e.KeyChar > '9') && (e.KeyChar != ',') && (e.KeyChar != 8)) 
+            if ((e.KeyChar < '0' || e.KeyChar > '9') && (e.KeyChar != ',') && (e.KeyChar != 8))
                 e.Handled = true;
         }
     }

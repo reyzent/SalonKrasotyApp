@@ -60,7 +60,7 @@ namespace SalonKrasotyApp
 
         private void EditBtn_Click(object sender, EventArgs e)
         {
-            if(isSaleFormOpen)
+            if (isSaleFormOpen)
             {
                 MessageBox.Show("Форма редактирования продаж уже открыта!", "Внимание",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);

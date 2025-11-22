@@ -2,12 +2,9 @@
 using SalonKrasotyApp_3.ModelEF;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SalonKrasotyApp_3
@@ -48,7 +45,7 @@ namespace SalonKrasotyApp_3
         {
             try
             {
-                var manufacturers = Program.db.Manufacturer.Select(m => m.Name).ToList();
+                List<string> manufacturers = Program.db.Manufacturer.Select(m => m.Name).ToList();
                 manufacturers.Insert(0, "Все производители");
                 FiltrCmb.DataSource = manufacturers;
                 FiltrCmb.SelectedIndex = 0;
@@ -64,15 +61,15 @@ namespace SalonKrasotyApp_3
             }
         }
 
-        void Podgotovka()
+        private void Podgotovka()
         {
-            var manufacturers = Program.db.Manufacturer.Select(m => m.Name).ToList();
+            List<string> manufacturers = Program.db.Manufacturer.Select(m => m.Name).ToList();
             manufacturers.Insert(0, "Все производители");
             FiltrCmb.DataSource = manufacturers;
 
             lstFormatData.Clear();
             foreach (Product prd in Program.db.Product.ToList())
-            {             
+            {
                 ProductUserCtrl puc = new ProductUserCtrl(prd);
                 puc.Notify += ProductNotify;
                 lstFormatData.Add(puc);
@@ -95,24 +92,22 @@ namespace SalonKrasotyApp_3
             if (sort != "Без сортировки")
             {
                 if (sort == "Название")
-                {   
-                    if (DownChk.Checked == false)
-                        lstFormatData = lstFormatData.OrderBy(p => p.Title).ToList();
-                    else
-                        lstFormatData = lstFormatData.
+                {
+                    lstFormatData = DownChk.Checked == false
+                        ? lstFormatData.OrderBy(p => p.Title).ToList()
+                        : lstFormatData.
                                 OrderByDescending(p => p.Title).ToList();
                 }
                 if (sort == "Стоимость")
-                {  
-                    if (!DownChk.Checked)
-                        lstFormatData = lstFormatData.OrderBy(p => p.Cost).ToList();
-                    else
-                        lstFormatData = lstFormatData.
+                {
+                    lstFormatData = !DownChk.Checked
+                        ? lstFormatData.OrderBy(p => p.Cost).ToList()
+                        : lstFormatData.
                                 OrderByDescending(p => p.Cost).ToList();
                 }
             }
 
-            nPageCurrent = 1;           
+            nPageCurrent = 1;
             nPageAll = lstFormatData.Count() / nDataInPage;
             if (nPageAll * nDataInPage < lstFormatData.Count())
                 nPageAll++;
@@ -123,15 +118,15 @@ namespace SalonKrasotyApp_3
 
         private void ShowData()
         {
-            int nDataMax = lstFormatData.Count();          
-            int beginProdNumber = (nPageCurrent - 1) * nDataInPage;       
+            int nDataMax = lstFormatData.Count();
+            int beginProdNumber = (nPageCurrent - 1) * nDataInPage;
             int endProdNumber = beginProdNumber + nDataInPage;
             if (endProdNumber > nDataMax) endProdNumber = nDataMax;
             ProductFlowPnl.Controls.Clear();
             for (int j = beginProdNumber; j < endProdNumber; j++)
             {
                 ProductFlowPnl.Controls.Add(lstFormatData[j]);
-            }          
+            }
             RangeLbl.Text =
                 $"Товары с {beginProdNumber + 1} по {endProdNumber} (из всего {lstFormatData.Count()})";
         }
@@ -262,7 +257,7 @@ namespace SalonKrasotyApp_3
             else if ((nPageCurrent == nPageFirst) && (nPageFirst > 1))
             {
                 nPageFirst--;
-                nPageCurrent = nPageFirst;           
+                nPageCurrent = nPageFirst;
             }
             ShowButtons(nPageFirst, nPageCurrent);
             ShowData();
@@ -279,7 +274,7 @@ namespace SalonKrasotyApp_3
                 nPageFirst++;
                 nPageCurrent++;
             }
-            ShowButtons(nPageFirst, nPageCurrent);    
+            ShowButtons(nPageFirst, nPageCurrent);
             ShowData();
         }
 
@@ -291,22 +286,22 @@ namespace SalonKrasotyApp_3
             ShowData();
         }
 
-        void ShowButtons(int nPageFirst, int nPageCurrent)
+        private void ShowButtons(int nPageFirst, int nPageCurrent)
         {
             for (int i = 0; i < nButtons; i++)
             {
-                int nPage = nPageFirst + i; 
+                int nPage = nPageFirst + i;
                 btnsList[i].Text = nPage.ToString();
                 btnsList[i].BackColor = Color.White;
                 btnsList[i].Visible = true;
 
                 if (nPage <= nPageAll)
-                {   
+                {
                     if (nPage == nPageCurrent)
                         btnsList[i].BackColor = Color.LightBlue;
                 }
                 else
-                {  
+                {
                     btnsList[i].Visible = false;
                 }
             }

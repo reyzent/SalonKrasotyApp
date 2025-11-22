@@ -54,7 +54,7 @@ namespace SalonKrasotyApp
             }
             finally
             {
-                isSaleFormOpen = false; 
+                isSaleFormOpen = false;
             }
         }
 

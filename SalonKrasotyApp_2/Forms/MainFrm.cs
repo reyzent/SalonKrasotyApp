@@ -82,7 +82,7 @@ namespace SalonKrasotyApp_2
 
             try
             {
-                var row = newProductDataGridView.Rows[e.RowIndex];
+                DataGridViewRow row = newProductDataGridView.Rows[e.RowIndex];
                 NewProduct productView = row.DataBoundItem as NewProduct;
 
                 if (productView != null && !productView.IsActive)
@@ -155,24 +155,20 @@ namespace SalonKrasotyApp_2
 
         private List<NewProduct> ApplyFiltering(List<NewProduct> data)
         {
-            if (filtr != "Все производители")
-            {
-                return data
+            return filtr != "Все производители"
+                ? data
                     .Where(p => p.Manufacturer == filtr)
-                    .ToList();
-            }
-            return data;
+                    .ToList()
+                : data;
         }
 
         private List<NewProduct> ApplySearch(List<NewProduct> data)
         {
-            if (!string.IsNullOrEmpty(search))
-            {
-                return data
+            return !string.IsNullOrEmpty(search)
+                ? data
                     .Where(p => p.Title != null && p.Title.Contains(search))
-                    .ToList();
-            }
-            return data;
+                    .ToList()
+                : data;
         }
 
         private List<NewProduct> ApplySorting(List<NewProduct> data)

@@ -1,12 +1,7 @@
 ﻿using SalonKrasotyApp_3.ModelEF;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SalonKrasotyApp_3.Forms
@@ -34,7 +29,7 @@ namespace SalonKrasotyApp_3.Forms
                 MessageBox.Show("Нельзя рекоментовать товар самому себе!");
                 return;
             }
-            if (prd.Product1.Contains(newprod) == true) 
+            if (prd.Product1.Contains(newprod) == true)
             {
                 MessageBox.Show("Товар " + newprod.Title + " уже рекомендован!");
                 return;

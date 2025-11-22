@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace SalonKrasotyApp_2
 {
-    class NewProduct
+    internal class NewProduct
     {
         public int ID { get; set; }
         public string Title { get; set; }
@@ -13,7 +13,7 @@ namespace SalonKrasotyApp_2
         public decimal Cost { get; set; }
         public string Manufacturer { get; set; }
         public int DopProducts { get; set; }
-        public decimal SummaSale {  get; set; }
+        public decimal SummaSale { get; set; }
         public Image Picture { get; set; }
         public bool IsActive { get; set; }
 
@@ -29,17 +29,11 @@ namespace SalonKrasotyApp_2
             Description = prd.Description;
             DopProducts = prd.Product1.Count;
 
-            if (prd.ManufacturerID.HasValue)
-                Manufacturer = prd.Manufacturer.Name;
-            else
-                Manufacturer = "";
+            Manufacturer = prd.ManufacturerID.HasValue ? prd.Manufacturer.Name : "";
 
             Cost = prd.Cost;
 
-            if (prd.MainImagePath != "")
-                Picture = Image.FromFile(prd.MainImagePath.Trim());
-            else
-                Picture = Properties.Resources.beauty_logo;
+            Picture = prd.MainImagePath != "" ? Image.FromFile(prd.MainImagePath.Trim()) : Properties.Resources.beauty_logo;
 
             DateTime today = DateTime.Today;
             DateTime date1 = today.AddDays(-30);
