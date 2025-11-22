@@ -1,4 +1,4 @@
-﻿using SalonKrasotyApp_2.ModelEF;
+﻿using SalonKrasotyApp_3.ModelEF;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace SalonKrasotyApp_2.Forms
+namespace SalonKrasotyApp_3.Forms
 {
     public partial class CostChangeFrm : Form
     {
@@ -32,7 +32,7 @@ namespace SalonKrasotyApp_2.Forms
 
         private void EditCostBtn_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(AddCostTxt.Text))
+            if ((AddCostTxt.Text == ""))
             {
                 MessageBox.Show("Не задана величина изменения цены.", "Ошибка",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -82,7 +82,7 @@ namespace SalonKrasotyApp_2.Forms
 
         private void AddCostTxt_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if ((e.KeyChar < '0' || e.KeyChar > '9') && (e.KeyChar != ',') && (e.KeyChar != 8)) 
+            if ((e.KeyChar < '0' || e.KeyChar > '9') && (e.KeyChar != ',') && (e.KeyChar != 8))
                 e.Handled = true;
         }
     }

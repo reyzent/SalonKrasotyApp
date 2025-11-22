@@ -104,9 +104,10 @@ namespace SalonKrasotyApp
                 {
                     Program.db.ProductSale.Remove(prdSale);
                     Program.db.SaveChanges();
-                    // Обновляем данные после удаления
                     productSaleBindingSource.DataSource = Program.db.ProductSale
-                        .Where(p => p.ProductID == prod.ID).ToList();
+                        .Where(p => p.ProductID == prod.ID)
+                        .OrderByDescending(s => s.SaleDate)
+                        .ToList();
                 }
                 catch (Exception ex)
                 {

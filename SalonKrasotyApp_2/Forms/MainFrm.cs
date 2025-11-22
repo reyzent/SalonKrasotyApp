@@ -121,19 +121,22 @@ namespace SalonKrasotyApp_2
 
         public void Podgotovka()
         {
-            lstFormatData.Clear();
-            
+            List<NewProduct> tempData = new List<NewProduct>();
+
             foreach (Product prd in Program.db.Product.ToList())
             {
                 NewProduct newprd = new NewProduct(prd);
-                lstFormatData.Add(newprd);
+                tempData.Add(newprd);
             }
 
             try
             {
-                ApplyFiltering();
-                ApplySearch();
-                ApplySorting();
+                tempData = ApplyFiltering(tempData);
+                tempData = ApplySearch(tempData);
+                tempData = ApplySorting(tempData);
+
+                lstFormatData = tempData;
+
                 UpdatePagination();
                 ShowData();
 
@@ -150,44 +153,45 @@ namespace SalonKrasotyApp_2
             }
         }
 
-        private void ApplyFiltering()
+        private List<NewProduct> ApplyFiltering(List<NewProduct> data)
         {
             if (filtr != "Все производители")
             {
-                lstFormatData = lstFormatData
+                return data
                     .Where(p => p.Manufacturer == filtr)
                     .ToList();
             }
+            return data;
         }
 
-        private void ApplySearch()
+        private List<NewProduct> ApplySearch(List<NewProduct> data)
         {
             if (!string.IsNullOrEmpty(search))
             {
-                lstFormatData = lstFormatData
+                return data
                     .Where(p => p.Title != null && p.Title.Contains(search))
                     .ToList();
             }
+            return data;
         }
 
-        private void ApplySorting()
+        private List<NewProduct> ApplySorting(List<NewProduct> data)
         {
             if (sort != "Без сортировки")
             {
                 switch (sort)
                 {
                     case "Название":
-                        lstFormatData = DownChk.Checked
-                            ? lstFormatData.OrderByDescending(p => p.Title ?? "").ToList()
-                            : lstFormatData.OrderBy(p => p.Title ?? "").ToList();
-                        break;
+                        return DownChk.Checked
+                            ? data.OrderByDescending(p => p.Title ?? "").ToList()
+                            : data.OrderBy(p => p.Title ?? "").ToList();
                     case "Стоимость":
-                        lstFormatData = DownChk.Checked
-                            ? lstFormatData.OrderByDescending(p => p.Cost).ToList()
-                            : lstFormatData.OrderBy(p => p.Cost).ToList();
-                        break;
+                        return DownChk.Checked
+                            ? data.OrderByDescending(p => p.Cost).ToList()
+                            : data.OrderBy(p => p.Cost).ToList();
                 }
             }
+            return data;
         }
 
         private void UpdatePagination()
@@ -209,12 +213,11 @@ namespace SalonKrasotyApp_2
             int beginProdNumber = (nPageCurrent - 1) * nDataInPage;
             int endProdNumber = Math.Min(beginProdNumber + nDataInPage, lstFormatData.Count);
 
-            List<NewProduct> pageData = lstFormatData
-                .Skip(beginProdNumber)
-                .Take(nDataInPage)
-                .ToList();
-
-            newProductBindingSource.DataSource = pageData;
+            newProductBindingSource.List.Clear();
+            for (int j = beginProdNumber; j < endProdNumber; j++)
+            {
+                newProductBindingSource.List.Add(lstFormatData[j]);
+            }
 
             RangeLbl.Text = $"Товары с {beginProdNumber + 1} по {endProdNumber} (всего {lstFormatData.Count})";
         }
@@ -331,7 +334,6 @@ namespace SalonKrasotyApp_2
                 return;
             }
 
-            // Получаем оригинальный Product из базы данных
             Product prd = Program.db.Product.Find(newProduct.ID);
 
             if (prd == null)

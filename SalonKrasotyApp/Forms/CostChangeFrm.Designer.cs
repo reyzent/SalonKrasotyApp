@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CostChangeFrm));
             this.label1 = new System.Windows.Forms.Label();
             this.AddCostTxt = new System.Windows.Forms.TextBox();
             this.EditCostBtn = new System.Windows.Forms.Button();
@@ -81,6 +82,7 @@
             this.Controls.Add(this.EditCostBtn);
             this.Controls.Add(this.AddCostTxt);
             this.Controls.Add(this.label1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CostChangeFrm";
             this.Text = "Изменение стоимости товаров";
             this.Load += new System.EventHandler(this.CostChangeFrm_Load);

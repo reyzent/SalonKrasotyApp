@@ -39,7 +39,6 @@ namespace SalonKrasotyApp
                 return;
             }
 
-            // ПРОВЕРКА ЧТО ЦЕНА НЕ СТАНЕТ ОТРИЦАТЕЛЬНОЙ
             foreach (int id in MainFrm.lstSelectedIdData)
             {
                 Product prd = Program.db.Product.Find(id);
@@ -76,7 +75,8 @@ namespace SalonKrasotyApp
 
         private void AddCostTxt_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if ((e.KeyChar < '0' || e.KeyChar > '9') && (e.KeyChar != ',') && (e.KeyChar != 8) && (e.KeyChar != '-')) e.Handled = true;
+            if ((e.KeyChar < '0' || e.KeyChar > '9') && (e.KeyChar != ',') && (e.KeyChar != 8)) 
+                e.Handled = true;
         }
     }
 }

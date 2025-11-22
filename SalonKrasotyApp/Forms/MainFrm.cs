@@ -12,6 +12,7 @@ namespace SalonKrasotyApp
     {
         private const int nDataInPage = 20;
         private const int nButtons = 4;
+        private const int IsActiveColumnIndex = 5;
 
         private int nPageAll = 0;
         private int nPageFirst = 1;
@@ -100,10 +101,10 @@ namespace SalonKrasotyApp
 
             try
             {
-                if (productDataGridView[5, e.RowIndex].Value == null)
+                if (productDataGridView[IsActiveColumnIndex, e.RowIndex].Value == null)
                     return;
 
-                bool isactive = (bool)productDataGridView[5, e.RowIndex].Value;
+                bool isactive = (bool)productDataGridView[IsActiveColumnIndex, e.RowIndex].Value;
                 if (!isactive)
                 {
                     e.CellStyle.BackColor = Color.LightGray;
